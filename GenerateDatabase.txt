@@ -1,0 +1,13 @@
+﻿To generate database, use:
+
+Add-Migration InitialCreate
+Update-Database
+
+To generate examples, use query tool under SQL Server Object Explorer with:
+
+INSERT INTO music_inventory(AlbumName, Genre, Performer,Price) VALUES
+('Introducing... The Beatles','Rock','The Beatles',250),
+('Meet the Beatles!','Rock','The Beatles',250),
+('Thriller','R&B','Micheal Jackson',125),
+('Bad','Pop','Michael Jackson',125),
+('The Works of Mozart','Classical','Mozart',50);
