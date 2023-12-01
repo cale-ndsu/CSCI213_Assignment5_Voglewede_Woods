@@ -56,7 +56,7 @@ namespace Assignment5_Voglewede_Woods.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AlbumName,Genre,Performer,Price")] Music_Inventory music_Inventory)
+        public async Task<IActionResult> Create([Bind("Id,AlbumName,Genre,Performer,Price,Type,Year")] Music_Inventory music_Inventory)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace Assignment5_Voglewede_Woods.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AlbumName,Genre,Performer,Price")] Music_Inventory music_Inventory)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AlbumName,Genre,Performer,Price,Type,Year")] Music_Inventory music_Inventory)
         {
             if (id != music_Inventory.Id)
             {
@@ -160,9 +160,17 @@ namespace Assignment5_Voglewede_Woods.Controllers
             return (_context.Music_Inventory?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        public ActionResult admin()
+        public ActionResult Admin()
         {
-            return View(admin);
+            return View(Admin);
+        }
+
+        public async Task<IActionResult> AdminTools()
+        {
+            return _context.Music_Inventory != null ?
+                        View(await _context.Music_Inventory.ToListAsync()) :
+                        Problem("Entity set 'Assignment5_Voglewede_WoodsContext.Music_Inventory'  is null.");
+            
         }
     }
 }
