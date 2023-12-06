@@ -1,8 +1,7 @@
 ﻿To generate database, use:
 
-Drop-Database
-Remove-Migration
 Add-Migration InitialCreate
+Add-Migration YearAndType
 update-database
 
 To generate examples, use query tool under SQL Server Object Explorer with:
