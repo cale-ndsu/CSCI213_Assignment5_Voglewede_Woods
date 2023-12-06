@@ -1,45 +1,54 @@
-﻿@model IEnumerable<Assignment5_Voglewede_Woods.Models.Music_Inventory>
+﻿@model Assignment5_Voglewede_Woods.Models.GenreViewModel
+
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<!--<p>
-    <a asp-action="Create">Create New</a>
-</p>-->
-<p>
-    Genre Dropdown Here
-</p>
-<br/>
-<p>
-    Filtered Performers Dropdown Here
-</p>
 
+
+<form asp-controller="Music_Inventory" asp-action="Index" method="get">
+    <p>
+        
+        Genre: <select asp-for="MusicGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+
+        Performer: <select asp-for="MusicPerformer" asp-items="Model.Performers">
+            <option value="">All</option>
+        </select>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 <table class="table">
+
+<br/>
+
+
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AlbumName)
+                @Html.DisplayNameFor(model => model.Music![0].AlbumName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Genre)
+                @Html.DisplayNameFor(model => model.Music![0].Genre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Performer)
+                @Html.DisplayNameFor(model => model.Music![0].Performer)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Music![0].Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayNameFor(model => model.Music![0].Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Year)
+                @Html.DisplayNameFor(model => model.Music![0].Year)
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Music!) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.AlbumName)
@@ -59,12 +68,8 @@
             <td>
                     @Html.DisplayFor(modelItem => item.Year)
             </td>
-            <!--
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>-->
+            
+            
         </tr>
 }
     </tbody>

@@ -19,13 +19,51 @@ namespace Assignment5_Voglewede_Woods.Controllers
             _context = context;
         }
 
+       
         // GET: Music_Inventory
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string musicGenre, string musicPerformer, string searchString)
         {
-            return _context.Music_Inventory != null ?
-                        View(await _context.Music_Inventory.ToListAsync()) :
-                        Problem("Entity set 'Assignment5_Voglewede_WoodsContext.Music_Inventory'  is null.");
+            if (_context.Music_Inventory == null)
+            {
+                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+            }
+
+            // Use LINQ to get list of genres.
+            IQueryable<string> genreQuery = from m in _context.Music_Inventory
+                                            orderby m.Genre
+                                            select m.Genre;
+            var music = from m in _context.Music_Inventory
+                         select m;
+
+            // Use LINQ to get list of performers.
+            IQueryable<string> performerQuery = from n in _context.Music_Inventory
+                                            orderby n.Performer
+                                            select n.Performer;
+            var songs = from n in _context.Music_Inventory
+                        select n;
+
+           
+            if (!string.IsNullOrEmpty(musicGenre))
+            {
+                music = music.Where(x => x.Genre == musicGenre);
+            }
+
+            if (!string.IsNullOrEmpty(musicPerformer))
+            {
+                music = music.Where(x => x.Performer == musicPerformer);
+            }
+
+            var musicGenreVM = new GenreViewModel
+            {
+                Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                Performers = new SelectList(await performerQuery.Distinct().ToListAsync()),
+                Music = await music.ToListAsync()
+            };
+
+            return View(musicGenreVM);
         }
+
+
 
         // GET: Music_Inventory/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -62,7 +100,7 @@ namespace Assignment5_Voglewede_Woods.Controllers
             {
                 _context.Add(music_Inventory);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AdminTools));
             }
             return View(music_Inventory);
         }
@@ -113,7 +151,7 @@ namespace Assignment5_Voglewede_Woods.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AdminTools));
             }
             return View(music_Inventory);
         }
@@ -152,7 +190,7 @@ namespace Assignment5_Voglewede_Woods.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AdminTools));
         }
 
         private bool Music_InventoryExists(int id)

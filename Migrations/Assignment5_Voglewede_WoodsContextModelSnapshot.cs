@@ -44,17 +44,9 @@ namespace Assignment5_Voglewede_Woods.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Year")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Music_Inventory");
+                    b.ToTable("Music_Inventory", (string)null);
                 });
 #pragma warning restore 612, 618
         }

@@ -13,3 +13,4 @@ INSERT INTO music_inventory(AlbumName, Genre, Performer,Price,Type,Year) VALUES
 ('Thriller','R&B','Micheal Jackson',125,'Vinyl','1982'),
 ('Bad','Pop','Michael Jackson',125,'Vinyl','1987'),
 ('The Works of Mozart','Classical','Mozart',50,'CD','2000');
+
